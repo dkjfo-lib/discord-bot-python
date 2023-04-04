@@ -13,7 +13,7 @@ def run_discord_bot():
     TOKEN = os.getenv('DISCORD_BOT_TOKEN')
     PREFIX = os.getenv('DISCORD_BOT_PREFIX')
     intents = discord.Intents.default()
-    intents.message_content = True
+    # intents.message_content = True
     client = discord.Client(intents=intents)
 
     @client.event
