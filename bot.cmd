@@ -1,6 +1,6 @@
 :loop
 
-python ./main.py
+py ./main.py
 pause
 
 goto loop

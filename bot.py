@@ -2,18 +2,23 @@ import discord
 import responses
 import os
 
-async def send_message(message :discord.Message, user_message, is_private) -> str:
-    try: 
+
+async def send_message(message: discord.Message, user_message, is_private) -> str:
+    try:
         response = await responses.handle_response(user_message)
-        await message.author.send(content = response.text, embed=response.embed) if is_private else await message.channel.send(content = response.text, embed=response.embed)
+        if is_private:
+            await message.author.send(content=response.text, embed=response.embed, embeds=response.embeds)
+        else:
+            await message.channel.send(content=response.text, embed=response.embed, embeds=response.embeds)
     except Exception as e:
         print(e)
+
 
 def run_discord_bot():
     TOKEN = os.getenv('DISCORD_BOT_TOKEN')
     PREFIX = os.getenv('DISCORD_BOT_PREFIX')
     intents = discord.Intents.default()
-    # intents.message_content = True
+    intents.message_content = True
     client = discord.Client(intents=intents)
 
     @client.event
@@ -21,7 +26,7 @@ def run_discord_bot():
         print(f'{client.user} is now running!')
 
     @client.event
-    async def on_message(message :discord.Message):
+    async def on_message(message: discord.Message):
         # Make sure bot doesn't get stuck in an infinite loop
         if message.author == client.user or not message.content.startswith(PREFIX):
             return
