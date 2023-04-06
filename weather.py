@@ -5,7 +5,8 @@ import discord
 
 
 async def get_weather_test(city: str) -> discord.Embed:
-    complete_url = f'https://api.open-meteo.com/v1/forecast?latitude=44.80&longitude=20.47&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability,precipitation,weathercode,windspeed_10m&daily=sunrise,sunset,uv_index_max,precipitation_sum&windspeed_unit=ms&start_date=2023-04-04&end_date=2023-04-05&timezone=auto'
+    coords = 'latitude=44.80&longitude=20.47'
+    complete_url = f'https://api.open-meteo.com/v1/forecast?{coords}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability,precipitation,weathercode,windspeed_10m&daily=sunrise,sunset,uv_index_max,precipitation_sum&windspeed_unit=ms&start_date=2023-04-05&end_date=2023-04-07&timezone=auto'
     response = requests.get(complete_url)
     data = response.json()
     print()
@@ -74,15 +75,15 @@ def convert_to_ampm(hour :str):
     
 def get_weather_emoji(icon: str) -> str:
     icon = icon[:-1]
-    if icon == '1':
+    if icon == '01':
         return ":sunny:"
-    elif icon == '2':
+    elif icon == '02':
         return "🌤"
-    elif icon == '3':
+    elif icon == '03':
         return ":cloud:"
-    elif icon == '4':
+    elif icon == '04':
         return "🌥"
-    elif icon == '9':
+    elif icon == '09':
         return "🌧"
     elif icon == '10':
         return "🌧"
